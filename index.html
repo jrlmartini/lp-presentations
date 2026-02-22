@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coming Soon</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at top, #2c3e7b 0%, #140f2d 45%, #08050f 100%);
+        color: #f7f7ff;
+      }
+
+      .halo {
+        position: absolute;
+        width: 56vmax;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: conic-gradient(from 90deg, #8ec5fc, #e0c3fc, #8ec5fc);
+        filter: blur(56px);
+        opacity: 0.25;
+        animation: spin 18s linear infinite;
+      }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        width: min(680px, 90vw);
+        padding: clamp(2rem, 4vw, 3.25rem);
+        border-radius: 1.5rem;
+        text-align: center;
+        background: rgba(9, 12, 28, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #c7cfff;
+      }
+
+      .pill-dot {
+        width: 0.55rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #8ec5fc;
+        box-shadow: 0 0 0.7rem #8ec5fc;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.5rem, 8vw, 5.2rem);
+        line-height: 1;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        background: linear-gradient(120deg, #ffffff 20%, #c6d6ff 40%, #f4d3ff 60%, #ffffff 80%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 250% auto;
+        animation: shimmer 3.5s linear infinite;
+      }
+
+      p {
+        margin-top: 1rem;
+        color: #d7dcff;
+        font-size: clamp(1rem, 2.2vw, 1.2rem);
+      }
+
+      @keyframes shimmer {
+        to {
+          background-position: 250% center;
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="halo" aria-hidden="true"></div>
+    <main class="card">
+      <div class="pill"><span class="pill-dot" aria-hidden="true"></span>Stay tuned</div>
+      <h1>Coming Soon</h1>
+      <p>We&rsquo;re building something beautiful. Launching shortly.</p>
+    </main>
+  </body>
+</html>
