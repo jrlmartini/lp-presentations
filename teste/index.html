@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Launchpad Hub | Apresentação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --c-navy-950: #070a12;
+        --c-navy-900: #080824;
+        --c-purple-900: #241445;
+        --c-light-100: #e7ecf6;
+        --c-light-200: #c8d2e8;
+        --c-accent: #f20f46;
+        --c-wine: #7b0037;
+
+        --font-heading: "Orbitron", sans-serif;
+        --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+        --slide-w: min(95vw, 180vh);
+        --slide-h: min(95vh, 56.25vw);
+        --space: clamp(1rem, 2.3cqw, 2.8rem);
+        --radius: clamp(10px, 1.2cqw, 24px);
+
+        --text-title: clamp(1.6rem, 4.2cqw, 4.2rem);
+        --text-subtitle: clamp(1rem, 2.2cqw, 2.3rem);
+        --text-body: clamp(0.95rem, 1.5cqw, 1.55rem);
+        --text-caption: clamp(0.72rem, 0.95cqw, 1.1rem);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: radial-gradient(circle at top, #0f1730 5%, #060712 70%);
+        color: var(--c-light-100);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .deck {
+        width: var(--slide-w);
+        height: var(--slide-h);
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 20px 90px rgba(0, 0, 0, 0.45);
+        container-type: inline-size;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: var(--space);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        opacity: 0;
+        transform: translateX(3%);
+        transition: opacity 420ms ease, transform 420ms ease;
+        pointer-events: none;
+      }
+
+      .slide.active {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+      }
+
+      .slide.dark {
+        background: linear-gradient(145deg, var(--c-navy-900), #030316 72%);
+        color: var(--c-light-100);
+      }
+
+      .slide.light {
+        background: linear-gradient(145deg, var(--c-light-100), var(--c-light-200));
+        color: var(--c-navy-900);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5em;
+        font-size: var(--text-caption);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.88;
+      }
+
+      .tag::before {
+        content: "";
+        width: 1.4em;
+        height: 0.2em;
+        border-radius: 999px;
+        background: var(--c-accent);
+      }
+
+      .logo {
+        font-family: var(--font-heading);
+        font-size: clamp(0.85rem, 1.7cqw, 1.85rem);
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4em;
+        white-space: nowrap;
+      }
+
+      .logo .hub {
+        font-family: var(--font-body);
+        font-size: 0.58em;
+        padding: 0.35em 0.55em;
+        border-radius: 0.5em;
+        background: color-mix(in oklab, currentColor 17%, transparent);
+      }
+
+      .content {
+        align-self: center;
+        max-width: 78%;
+      }
+
+      h1,
+      h2 {
+        font-family: var(--font-heading);
+        letter-spacing: 0.04em;
+        line-height: 1.12;
+        margin: 0 0 0.45em;
+      }
+
+      h1 {
+        font-size: var(--text-title);
+      }
+
+      h2 {
+        font-size: var(--text-subtitle);
+      }
+
+      .bullets {
+        list-style: none;
+        padding: 0;
+        margin: 1.1em 0 0;
+        display: grid;
+        gap: 0.65em;
+        font-size: var(--text-body);
+      }
+
+      .bullets li {
+        display: flex;
+        align-items: center;
+        gap: 0.75em;
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      .bullets li::before {
+        content: "";
+        width: 0.62em;
+        height: 0.62em;
+        border-radius: 0.2em;
+        background: var(--c-accent);
+        box-shadow: 0 0 0 0.18em color-mix(in srgb, var(--c-accent), transparent 74%);
+      }
+
+      .slide.light .bullets li::before {
+        background: var(--c-wine);
+      }
+
+      .build-visible {
+        animation: riseIn 380ms ease forwards;
+      }
+
+      .visual-box {
+        margin-top: 1.6em;
+        width: min(70cqw, 650px);
+        border-radius: calc(var(--radius) * 0.7);
+        border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+        padding: clamp(0.8rem, 1.3cqw, 1.3rem);
+        display: grid;
+        gap: 0.7em;
+        background: color-mix(in oklab, currentColor 7%, transparent);
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 0.8em;
+        font-size: var(--text-body);
+      }
+
+      .check {
+        width: 1.2em;
+        height: 1.2em;
+        border-radius: 0.35em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 40%);
+        display: grid;
+        place-items: center;
+        font-size: 0.75em;
+      }
+
+      .package {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.7em;
+      }
+
+      .folder {
+        border-radius: 0.7em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
+        padding: 0.7em;
+        font-size: var(--text-caption);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8em;
+      }
+
+      .card {
+        border-radius: 0.9em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        padding: 1em;
+        text-align: center;
+        font-size: var(--text-caption);
+      }
+
+      .card .ban {
+        width: 1.9em;
+        height: 1.9em;
+        border-radius: 999px;
+        border: 2px solid var(--c-accent);
+        margin: 0 auto 0.6em;
+        position: relative;
+      }
+
+      .card .ban::after {
+        content: "";
+        position: absolute;
+        left: 0.2em;
+        right: 0.2em;
+        top: 50%;
+        height: 2px;
+        background: var(--c-accent);
+        transform: rotate(-35deg);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        font-size: var(--text-caption);
+      }
+
+      .controls {
+        position: fixed;
+        right: 1.1rem;
+        bottom: 1.1rem;
+        display: flex;
+        gap: 0.5rem;
+        z-index: 40;
+      }
+
+      .btn {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(8, 8, 36, 0.72);
+        color: #e7ecf6;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.6rem;
+        font: 600 0.84rem/1 var(--font-body);
+        cursor: pointer;
+      }
+
+      .progress {
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      @keyframes riseIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-aspect-ratio: 16/10) {
+        .content {
+          max-width: 94%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck" id="deck">
+      <section class="slide dark active" data-build="2">
+        <header class="brand">
+          <span class="tag">Curso de Fomento Deeptech</span>
+          <span class="logo">LAUNCHPAD <span class="hub">hub</span></span>
+        </header>
+        <div class="content">
+          <h1>Mapa de execução para projetos que querem competir.</h1>
+          <ul class="bullets">
+            <li data-step="1">Apresentação piloto do design system para novas turmas.</li>
+            <li data-step="2">Navegue com as setas para construir os elementos.</li>
+          </ul>
+        </div>
+        <footer class="footer">
+          <span>Teste visual • tema escalável</span>
+          <span class="progress"></span>
+        </footer>
+      </section>
+
+      <section class="slide light" data-build="4">
+        <header class="brand">
+          <span class="tag">Objetivo da aula</span>
+          <span class="logo">LAUNCHPAD <span class="hub">hub</span></span>
+        </header>
+        <div class="content">
+          <h2>Se sair sabendo o que fazer primeiro, já valeu.</h2>
+          <ul class="bullets">
+            <li data-step="1">Mapa do curso</li>
+            <li data-step="2">Critérios reais de aprovação</li>
+            <li data-step="3">Método Launchpad: foco e cadência</li>
+          </ul>
+          <div class="visual-box" data-step="4">
+            <div class="check-row"><span class="check">✓</span><span>Direção clara</span></div>
+            <div class="check-row"><span class="check">✓</span><span>Próximo passo definido</span></div>
+          </div>
+        </div>
+        <footer class="footer">
+          <span>Visual: checklist simples</span>
+          <span class="progress"></span>
+        </footer>
+      </section>
+
+      <section class="slide dark" data-build="4">
+        <header class="brand">
+          <span class="tag">A promessa</span>
+          <span class="logo">LAUNCHPAD <span class="hub">hub</span></span>
+        </header>
+        <div class="content">
+          <h2>O que você leva ao final do curso.</h2>
+          <ul class="bullets">
+            <li data-step="1">Projeto pronto para competir</li>
+            <li data-step="2">Adaptável a editais</li>
+            <li data-step="3">Sistema replicável (pra sempre)</li>
+          </ul>
+          <div class="visual-box package" data-step="4">
+            <div class="folder">/projeto-base.md</div>
+            <div class="folder">/evidencias/</div>
+            <div class="folder">/criterios/</div>
+            <div class="folder">/cadencia-semanal/</div>
+          </div>
+        </div>
+        <footer class="footer">
+          <span>Output: arquivo + pastas + decisões</span>
+          <span class="progress"></span>
+        </footer>
+      </section>
+
+      <section class="slide light" data-build="4">
+        <header class="brand">
+          <span class="tag">O que o curso não é</span>
+          <span class="logo">LAUNCHPAD <span class="hub">hub</span></span>
+        </header>
+        <div class="content">
+          <h2>Método, critério e execução. O resto é ruído.</h2>
+          <ul class="bullets">
+            <li data-step="1">Não é promessa de aprovação</li>
+            <li data-step="2">Não é fórmula mágica</li>
+            <li data-step="3">Não é “texto bonito”</li>
+          </ul>
+          <div class="cards" data-step="4">
+            <article class="card"><div class="ban"></div>Sem atalhos</article>
+            <article class="card"><div class="ban"></div>Sem hype vazio</article>
+            <article class="card"><div class="ban"></div>Sem copy cosmética</article>
+          </div>
+        </div>
+        <footer class="footer">
+          <span>Setas ← → • F para modo kiosk</span>
+          <span class="progress"></span>
+        </footer>
+      </section>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prevBtn" type="button">← Anterior</button>
+      <button class="btn" id="nextBtn" type="button">Próximo →</button>
+      <button class="btn" id="kioskBtn" type="button">Kiosk</button>
+    </div>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      let currentSlide = 0;
+      let buildStep = 0;
+
+      const updateProgress = () => {
+        slides.forEach((slide, idx) => {
+          const progress = slide.querySelector('.progress');
+          if (progress) progress.textContent = `${idx + 1} / ${slides.length}`;
+        });
+      };
+
+      const elementsForStep = (slide, step) =>
+        Array.from(slide.querySelectorAll(`[data-step="${step}"]`));
+
+      const resetBuild = (slide) => {
+        Array.from(slide.querySelectorAll('[data-step]')).forEach((el) => {
+          el.classList.remove('build-visible');
+          el.style.opacity = '';
+          el.style.transform = '';
+        });
+      };
+
+      const revealUpTo = (slide, maxStep) => {
+        resetBuild(slide);
+        for (let step = 1; step <= maxStep; step += 1) {
+          elementsForStep(slide, step).forEach((el) => {
+            el.classList.add('build-visible');
+          });
+        }
+      };
+
+      const activateSlide = (idx, withFinalState = false) => {
+        slides.forEach((s, sIdx) => s.classList.toggle('active', sIdx === idx));
+        currentSlide = idx;
+        const max = Number(slides[idx].dataset.build || 0);
+        buildStep = withFinalState ? max : 0;
+        revealUpTo(slides[idx], buildStep);
+      };
+
+      const next = () => {
+        const slide = slides[currentSlide];
+        const maxBuild = Number(slide.dataset.build || 0);
+
+        if (buildStep < maxBuild) {
+          buildStep += 1;
+          revealUpTo(slide, buildStep);
+          return;
+        }
+
+        if (currentSlide < slides.length - 1) {
+          activateSlide(currentSlide + 1);
+        }
+      };
+
+      const prev = () => {
+        if (buildStep > 0) {
+          buildStep -= 1;
+          revealUpTo(slides[currentSlide], buildStep);
+          return;
+        }
+
+        if (currentSlide > 0) {
+          activateSlide(currentSlide - 1, true);
+        }
+      };
+
+      const toggleFullscreen = async () => {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      };
+
+      document.getElementById('nextBtn').addEventListener('click', next);
+      document.getElementById('prevBtn').addEventListener('click', prev);
+      document.getElementById('kioskBtn').addEventListener('click', toggleFullscreen);
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+          event.preventDefault();
+          next();
+        }
+        if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+          event.preventDefault();
+          prev();
+        }
+        if (event.key.toLowerCase() === 'f') {
+          toggleFullscreen();
+        }
+      });
+
+      updateProgress();
+      activateSlide(0);
+    </script>
+  </body>
+</html>
