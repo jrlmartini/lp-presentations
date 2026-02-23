@@ -88,6 +88,22 @@
         font-size: clamp(1rem, 2.2vw, 1.2rem);
       }
 
+      .cta {
+        display: inline-flex;
+        margin-top: 1.25rem;
+        padding: 0.7rem 1rem;
+        border-radius: 0.7rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #f7f7ff;
+        text-decoration: none;
+        font-weight: 600;
+        background: rgba(9, 12, 28, 0.55);
+      }
+
+      .cta:hover {
+        background: rgba(142, 197, 252, 0.18);
+      }
+
       @keyframes shimmer {
         to {
           background-position: 250% center;
@@ -120,6 +136,7 @@
       <div class="pill"><span class="pill-dot" aria-hidden="true"></span>Stay tuned</div>
       <h1>Coming Soon</h1>
       <p>We&rsquo;re building something beautiful. Launching shortly.</p>
+      <a class="cta" href="/teste/">Open test presentation (/teste)</a>
     </main>
   </body>
 </html>
