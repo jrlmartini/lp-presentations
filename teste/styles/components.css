@@ -1,0 +1,146 @@
+:root {
+  /* Semantic tokens (fallbacks can be overridden by theme/slide scope) */
+  --slide-brand-gap: 1rem;
+  --slide-tag-size: clamp(1.05rem, 1.45cqw, 1.55rem);
+  --slide-tag-accent-size: 1.4em;
+  --slide-tag-accent-thickness: 0.2em;
+  --slide-logo-width: clamp(140px, 22cqw, 280px);
+
+  --slide-title-size: clamp(1.6rem, 4.2cqw, 4.2rem);
+  --slide-subtitle-size: clamp(1.2rem, 2.75cqw, 2.95rem);
+  --slide-title-family: var(--font-heading, "Orbitron", sans-serif);
+  --slide-title-letter-spacing: 0.04em;
+  --slide-title-line-height: 1.12;
+  --slide-title-margin-bottom: 0.45em;
+
+  --slide-body-size: clamp(1.2rem, 2.2cqw, 2.2rem);
+  --slide-body-line-height: 1.5;
+  --slide-body-max-width: 82%;
+
+  --slide-bullets-gap: 0.8em;
+  --slide-bullets-margin-top: 1.1em;
+  --slide-bullet-gap: 0.75em;
+  --slide-bullet-marker-size: 0.62em;
+  --slide-bullet-marker-radius: 0.2em;
+  --slide-bullet-marker-color: var(--c-accent, #f20f46);
+  --slide-bullet-marker-shadow: 0 0 0 0.18em
+    color-mix(in srgb, var(--slide-bullet-marker-color), transparent 74%);
+
+  --slide-panel-radius: calc(var(--radius, 16px) * 0.7);
+  --slide-panel-border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+  --slide-panel-padding: clamp(0.8rem, 1.3cqw, 1.3rem);
+  --slide-panel-background: color-mix(in oklab, currentColor 7%, transparent);
+  --slide-panel-gap: 0.7em;
+
+  --slide-card-radius: 0.9em;
+  --slide-card-border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
+  --slide-card-background: color-mix(in oklab, currentColor 5%, transparent);
+  --slide-card-padding: 1em;
+  --slide-card-size: clamp(0.94rem, 1.28cqw, 1.32rem);
+
+  --slide-folder-radius: 0.7em;
+  --slide-folder-border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
+  --slide-folder-padding: 0.7em;
+  --slide-folder-size: clamp(0.92rem, 1.25cqw, 1.28rem);
+}
+
+.slide-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--slide-brand-gap);
+}
+
+.slide-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--slide-title-family);
+  font-size: var(--slide-tag-size);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  opacity: 0.94;
+}
+
+.slide-tag::before {
+  content: "";
+  width: var(--slide-tag-accent-size);
+  height: var(--slide-tag-accent-thickness);
+  border-radius: 999px;
+  background: var(--slide-bullet-marker-color);
+}
+
+.slide-logo {
+  width: var(--slide-logo-width);
+  height: auto;
+}
+
+.slide-title,
+.slide-subtitle {
+  font-family: var(--slide-title-family);
+  letter-spacing: var(--slide-title-letter-spacing);
+  line-height: var(--slide-title-line-height);
+  margin: 0 0 var(--slide-title-margin-bottom);
+}
+
+.slide-title {
+  font-size: var(--slide-title-size);
+}
+
+.slide-subtitle {
+  font-size: var(--slide-subtitle-size);
+}
+
+.slide-body {
+  font-size: var(--slide-body-size);
+  line-height: var(--slide-body-line-height);
+  max-width: var(--slide-body-max-width);
+}
+
+.slide-bullets {
+  list-style: none;
+  padding: 0;
+  margin: var(--slide-bullets-margin-top) 0 0;
+  display: grid;
+  gap: var(--slide-bullets-gap);
+  font-size: var(--slide-body-size);
+}
+
+.slide-bullet-item {
+  display: flex;
+  align-items: center;
+  gap: var(--slide-bullet-gap);
+}
+
+.slide-bullet-item::before {
+  content: "";
+  width: var(--slide-bullet-marker-size);
+  height: var(--slide-bullet-marker-size);
+  border-radius: var(--slide-bullet-marker-radius);
+  background: var(--slide-bullet-marker-color);
+  box-shadow: var(--slide-bullet-marker-shadow);
+}
+
+.slide-panel {
+  border-radius: var(--slide-panel-radius);
+  border: var(--slide-panel-border);
+  padding: var(--slide-panel-padding);
+  background: var(--slide-panel-background);
+  display: grid;
+  gap: var(--slide-panel-gap);
+}
+
+.slide-card {
+  border-radius: var(--slide-card-radius);
+  border: var(--slide-card-border);
+  background: var(--slide-card-background);
+  padding: var(--slide-card-padding);
+  font-size: var(--slide-card-size);
+}
+
+.slide-folder {
+  border-radius: var(--slide-folder-radius);
+  border: var(--slide-folder-border);
+  padding: var(--slide-folder-padding);
+  font-size: var(--slide-folder-size);
+}
