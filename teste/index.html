@@ -30,7 +30,7 @@
 
         --text-title: clamp(1.6rem, 4.2cqw, 4.2rem);
         --text-subtitle: clamp(1rem, 2.2cqw, 2.3rem);
-        --text-body: clamp(1.05rem, 1.75cqw, 1.75rem);
+        --text-body: clamp(1.12rem, 1.95cqw, 1.95rem);
         --text-caption: clamp(0.82rem, 1.08cqw, 1.22rem);
       }
 
@@ -80,7 +80,22 @@
 
       .logo-img { width: clamp(140px, 22cqw, 280px); height: auto; }
 
-      .content { align-self: start; max-width: 82%; margin-top: clamp(.35rem, .9cqw, 1rem); }
+      .content { align-self: start; max-width: 82%; margin-top: clamp(.9rem, 1.8cqw, 1.9rem); }
+      .slide.cover .content,
+      .slide.section-divider .content {
+        align-self: center;
+        margin-top: 0;
+      }
+      .slide.cover h1,
+      .slide.section-divider h1,
+      .slide.cover h2,
+      .slide.section-divider h2 {
+        font-size: clamp(2rem, 4.9cqw, 4.9rem);
+      }
+      .slide.content-slide .brand { margin-bottom: clamp(.6rem, 1.2cqw, 1.4rem); }
+      .slide.content-slide .content { margin-top: clamp(1.25rem, 2.4cqw, 2.6rem); }
+      .slide.content-slide h2 { margin-bottom: .75em; }
+      .slide.content-slide .bullets { margin-top: 1.3em; }
       h1, h2 {
         font-family: var(--font-heading);
         letter-spacing: .04em;
@@ -225,7 +240,7 @@
   </head>
   <body>
     <div class="deck" id="deck">
-      <section class="slide dark active" data-build="2">
+      <section class="slide dark cover active" data-build="2">
         <header class="brand">
           <span class="tag">Curso de Fomento Deeptech</span>
           <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
@@ -239,7 +254,7 @@
         </div>
       </section>
 
-      <section class="slide light" data-build="4">
+      <section class="slide light content-slide" data-build="4">
         <header class="brand">
           <span class="tag">Objetivo da aula</span>
           <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
@@ -258,7 +273,7 @@
         </div>
       </section>
 
-      <section class="slide dark" data-build="4">
+      <section class="slide dark content-slide" data-build="4">
         <header class="brand">
           <span class="tag">A promessa</span>
           <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
@@ -279,7 +294,7 @@
         </div>
       </section>
 
-      <section class="slide light" data-build="4">
+      <section class="slide light content-slide" data-build="4">
         <header class="brand">
           <span class="tag">O que o curso não é</span>
           <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
