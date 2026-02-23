@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles/slide-presets.css" />
     <style>
       :root {
         --c-navy-950: #070a12;
@@ -56,6 +57,14 @@
       }
 
       .slide {
+        --slide-content-max-width: 82%;
+        --slide-content-offset-top: clamp(.9rem, 1.8cqw, 1.9rem);
+        --slide-content-align: start;
+        --slide-title-size: var(--text-title);
+        --slide-title-body-gap: .45em;
+        --slide-body-size: var(--text-body);
+        --slide-bullet-gap: .8em;
+
         position: absolute;
         inset: 0;
         padding: var(--space);
@@ -80,38 +89,26 @@
 
       .logo-img { width: clamp(140px, 22cqw, 280px); height: auto; }
 
-      .content { align-self: start; max-width: 82%; margin-top: clamp(.9rem, 1.8cqw, 1.9rem); }
-      .slide.cover .content,
-      .slide.section-divider .content {
-        align-self: center;
-        margin-top: 0;
+      .content {
+        align-self: var(--slide-content-align);
+        max-width: var(--slide-content-max-width);
+        margin-top: var(--slide-content-offset-top);
       }
-      .slide.cover h1,
-      .slide.section-divider h1,
-      .slide.cover h2,
-      .slide.section-divider h2 {
-        font-size: clamp(2rem, 4.9cqw, 4.9rem);
-      }
-      .slide.content-slide .brand { margin-bottom: clamp(.6rem, 1.2cqw, 1.4rem); }
-      .slide.content-slide .content { max-width: 88%; margin-top: clamp(1.9rem, 3.4cqw, 3.8rem); }
-      .slide.content-slide h2 { margin-bottom: 1.05em; }
-      .slide.content-slide .bullets { margin-top: 1.5em; gap: .95em; }
       h1, h2 {
         font-family: var(--font-heading);
         letter-spacing: .04em;
         line-height: 1.12;
-        margin: 0 0 .45em;
+        margin: 0 0 var(--slide-title-body-gap);
+        font-size: var(--slide-title-size);
       }
-      h1 { font-size: var(--text-title); }
-      h2 { font-size: var(--text-subtitle); }
 
       .bullets {
         list-style: none;
         padding: 0;
         margin: 1.1em 0 0;
         display: grid;
-        gap: .8em;
-        font-size: var(--text-body);
+        gap: var(--slide-bullet-gap);
+        font-size: var(--slide-body-size);
       }
 
       [data-step] {
@@ -240,7 +237,7 @@
   </head>
   <body>
     <div class="deck" id="deck">
-      <section class="slide dark cover active" data-build="2">
+      <section class="slide dark slide--cover active" data-build="2">
         <header class="brand">
           <span class="tag">Curso de Fomento Deeptech</span>
           <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
@@ -254,7 +251,7 @@
         </div>
       </section>
 
-      <section class="slide light content-slide" data-build="4">
+      <section class="slide light slide--content" data-build="4">
         <header class="brand">
           <span class="tag">Objetivo da aula</span>
           <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
@@ -273,7 +270,7 @@
         </div>
       </section>
 
-      <section class="slide dark content-slide" data-build="4">
+      <section class="slide dark slide--content" data-build="4">
         <header class="brand">
           <span class="tag">A promessa</span>
           <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
@@ -294,7 +291,7 @@
         </div>
       </section>
 
-      <section class="slide light content-slide" data-build="4">
+      <section class="slide light slide--content" data-build="4">
         <header class="brand">
           <span class="tag">O que o curso não é</span>
           <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
