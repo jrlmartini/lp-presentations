@@ -1,0 +1,29 @@
+.slide--cover {
+  --slide-content-max-width: 82%;
+  --slide-content-offset-top: 0;
+  --slide-content-align: center;
+  --slide-title-size: clamp(2rem, 4.9cqw, 4.9rem);
+  --slide-title-body-gap: 0.45em;
+  --slide-body-size: var(--text-body);
+  --slide-bullet-gap: 0.8em;
+}
+
+.slide--content {
+  --slide-content-max-width: 88%;
+  --slide-content-offset-top: clamp(1.9rem, 3.4cqw, 3.8rem);
+  --slide-content-align: start;
+  --slide-title-size: var(--text-subtitle);
+  --slide-title-body-gap: 1.05em;
+  --slide-body-size: var(--text-body);
+  --slide-bullet-gap: 0.95em;
+}
+
+.slide--section-divider {
+  --slide-content-max-width: 82%;
+  --slide-content-offset-top: 0;
+  --slide-content-align: center;
+  --slide-title-size: clamp(2rem, 4.9cqw, 4.9rem);
+  --slide-title-body-gap: 0.45em;
+  --slide-body-size: var(--text-body);
+  --slide-bullet-gap: 0.8em;
+}
