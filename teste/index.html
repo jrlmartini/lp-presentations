@@ -164,6 +164,31 @@
         transform: rotate(-35deg);
       }
 
+
+      .slide-callout {
+        margin-top: 1em;
+        padding: calc(var(--space) * .45);
+        border-radius: calc(var(--radius) * .6);
+        border: 1px solid color-mix(in srgb, currentColor, transparent 55%);
+        background: color-mix(in oklab, currentColor 8%, transparent);
+        display: grid;
+        gap: .45em;
+      }
+
+      .slide-callout__title {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: var(--text-caption);
+        letter-spacing: .03em;
+        text-transform: uppercase;
+      }
+
+      .slide-callout__text {
+        margin: 0;
+        font-size: var(--text-body);
+        line-height: 1.35;
+      }
+
       .deck-progress {
         position: absolute;
         left: 0;
@@ -285,6 +310,11 @@
             <article class="card"><div class="ban"></div>Sem hype vazio</article>
             <article class="card"><div class="ban"></div>Sem copy cosmética</article>
           </div>
+
+          <aside class="slide-callout" role="note" aria-label="Destaque de execução" data-step="4">
+            <h3 class="slide-callout__title">Callout de extensão</h3>
+            <p class="slide-callout__text">Componente novo usando apenas tokens semânticos já existentes.</p>
+          </aside>
         </div>
       </section>
 
