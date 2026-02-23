@@ -29,9 +29,9 @@
         --radius: clamp(10px, 1.2cqw, 24px);
 
         --text-title: clamp(1.6rem, 4.2cqw, 4.2rem);
-        --text-subtitle: clamp(1rem, 2.2cqw, 2.3rem);
-        --text-body: clamp(0.95rem, 1.5cqw, 1.55rem);
-        --text-caption: clamp(0.72rem, 0.95cqw, 1.1rem);
+        --text-subtitle: clamp(1.2rem, 2.75cqw, 2.95rem);
+        --text-body: clamp(1.2rem, 2.2cqw, 2.2rem);
+        --text-caption: clamp(0.82rem, 1.08cqw, 1.22rem);
       }
 
       * { box-sizing: border-box; }
@@ -60,7 +60,7 @@
         inset: 0;
         padding: var(--space);
         display: grid;
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: auto 1fr;
         opacity: 0;
         transform: translateX(3%);
         transition: opacity 420ms ease, transform 420ms ease;
@@ -74,13 +74,28 @@
       .brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
       .tag {
         display: inline-flex; align-items: center; gap: .5em;
-        font-size: var(--text-caption); letter-spacing: .08em; text-transform: uppercase; opacity: .88;
+        font-family: var(--font-heading); font-size: clamp(1.05rem, 1.45cqw, 1.55rem); letter-spacing: .02em; text-transform: none; opacity: .94;
       }
       .tag::before { content: ""; width: 1.4em; height: .2em; border-radius: 999px; background: var(--c-accent); }
 
       .logo-img { width: clamp(140px, 22cqw, 280px); height: auto; }
 
-      .content { align-self: center; max-width: 78%; }
+      .content { align-self: start; max-width: 82%; margin-top: clamp(.9rem, 1.8cqw, 1.9rem); }
+      .slide.cover .content,
+      .slide.section-divider .content {
+        align-self: center;
+        margin-top: 0;
+      }
+      .slide.cover h1,
+      .slide.section-divider h1,
+      .slide.cover h2,
+      .slide.section-divider h2 {
+        font-size: clamp(2rem, 4.9cqw, 4.9rem);
+      }
+      .slide.content-slide .brand { margin-bottom: clamp(.6rem, 1.2cqw, 1.4rem); }
+      .slide.content-slide .content { max-width: 88%; margin-top: clamp(1.9rem, 3.4cqw, 3.8rem); }
+      .slide.content-slide h2 { margin-bottom: 1.05em; }
+      .slide.content-slide .bullets { margin-top: 1.5em; gap: .95em; }
       h1, h2 {
         font-family: var(--font-heading);
         letter-spacing: .04em;
@@ -95,7 +110,7 @@
         padding: 0;
         margin: 1.1em 0 0;
         display: grid;
-        gap: .65em;
+        gap: .8em;
         font-size: var(--text-body);
       }
 
@@ -147,7 +162,7 @@
         border-radius: .7em;
         border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
         padding: .7em;
-        font-size: var(--text-caption);
+        font-size: clamp(0.92rem, 1.25cqw, 1.28rem);
       }
 
       .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8em; }
@@ -157,7 +172,7 @@
         background: color-mix(in oklab, currentColor 5%, transparent);
         padding: 1em;
         text-align: center;
-        font-size: var(--text-caption);
+        font-size: clamp(0.94rem, 1.28cqw, 1.32rem);
       }
       .card .ban {
         width: 1.9em;
@@ -173,15 +188,6 @@
         left: .2em; right: .2em; top: 50%; height: 2px;
         background: var(--c-accent);
         transform: rotate(-35deg);
-      }
-
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-        font-size: var(--text-caption);
-        opacity: .9;
       }
 
       .deck-progress {
@@ -234,10 +240,10 @@
   </head>
   <body>
     <div class="deck" id="deck">
-      <section class="slide dark active" data-build="2">
+      <section class="slide dark cover active" data-build="2">
         <header class="brand">
           <span class="tag">Curso de Fomento Deeptech</span>
-          <img class="logo-img" src="../assets/logo-light.png" alt="Launchpad Hub" />
+          <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
         </header>
         <div class="content">
           <h1>Mapa de execução para projetos que querem competir.</h1>
@@ -246,13 +252,12 @@
             <li data-step="2">Navegue com as setas para construir os elementos.</li>
           </ul>
         </div>
-        <footer class="footer"><span>Teste visual • tema escalável</span></footer>
       </section>
 
-      <section class="slide light" data-build="4">
+      <section class="slide light content-slide" data-build="4">
         <header class="brand">
           <span class="tag">Objetivo da aula</span>
-          <img class="logo-img" src="../assets/logo-dark.png" alt="Launchpad Hub" />
+          <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
         </header>
         <div class="content">
           <h2>Se sair sabendo o que fazer primeiro, já valeu.</h2>
@@ -266,13 +271,12 @@
             <div class="check-row"><span class="check">✓</span><span>Próximo passo definido</span></div>
           </div>
         </div>
-        <footer class="footer"><span>Visual: checklist simples</span></footer>
       </section>
 
-      <section class="slide dark" data-build="4">
+      <section class="slide dark content-slide" data-build="4">
         <header class="brand">
           <span class="tag">A promessa</span>
-          <img class="logo-img" src="../assets/logo-light.png" alt="Launchpad Hub" />
+          <img class="logo-img" src="assets/Logo-light.png" alt="Launchpad Hub" />
         </header>
         <div class="content">
           <h2>O que você leva ao final do curso.</h2>
@@ -288,13 +292,12 @@
             <div class="folder">/cadencia-semanal/</div>
           </div>
         </div>
-        <footer class="footer"><span>Output: arquivo + pastas + decisões</span></footer>
       </section>
 
-      <section class="slide light" data-build="4">
+      <section class="slide light content-slide" data-build="4">
         <header class="brand">
           <span class="tag">O que o curso não é</span>
-          <img class="logo-img" src="../assets/logo-dark.png" alt="Launchpad Hub" />
+          <img class="logo-img" src="assets/Logo-dark.png" alt="Launchpad Hub" />
         </header>
         <div class="content">
           <h2>Método, critério e execução. O resto é ruído.</h2>
@@ -309,7 +312,6 @@
             <article class="card"><div class="ban"></div>Sem copy cosmética</article>
           </div>
         </div>
-        <footer class="footer"><span>Setas ← → • F para modo kiosk</span></footer>
       </section>
 
       <div class="deck-progress" aria-hidden="true"><span id="progressBar"></span></div>

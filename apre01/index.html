@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 0.1 | Launchpad Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --c-navy-900: #080824;
+        --c-light-100: #e7ecf6;
+        --c-light-200: #c8d2e8;
+        --c-accent: #f20f46;
+        --c-wine: #7b0037;
+
+        --font-heading: "Orbitron", sans-serif;
+        --font-body: "Inter", system-ui, sans-serif;
+
+        --slide-w: min(95vw, 180vh);
+        --slide-h: min(95vh, 56.25vw);
+        --space: clamp(1rem, 2.3cqw, 2.8rem);
+        --radius: clamp(10px, 1.2cqw, 24px);
+
+        --text-title: clamp(1.8rem, 4.8cqw, 5rem);
+        --text-subtitle: clamp(1.2rem, 2.75cqw, 2.95rem);
+        --text-body: clamp(1.12rem, 1.95cqw, 1.95rem);
+        --text-caption: clamp(0.82rem, 1.08cqw, 1.22rem);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; }
+      body {
+        font-family: var(--font-body);
+        background: radial-gradient(circle at top, #0f1730 5%, #060712 70%);
+        color: var(--c-light-100);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .deck {
+        width: var(--slide-w);
+        height: var(--slide-h);
+        position: relative;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 20px 90px rgba(0, 0, 0, 0.45);
+        container-type: inline-size;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: var(--space);
+        display: grid;
+        grid-template-rows: auto 1fr;
+        opacity: 0;
+        transform: translateX(3%);
+        transition: opacity 420ms ease, transform 420ms ease;
+        pointer-events: none;
+      }
+
+      .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+      .slide.dark { background: linear-gradient(145deg, var(--c-navy-900), #030316 72%); color: var(--c-light-100); }
+      .slide.light { background: linear-gradient(145deg, var(--c-light-100), var(--c-light-200)); color: var(--c-navy-900); }
+
+      .brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .tag {
+        display: inline-flex; align-items: center; gap: .5em;
+        font-family: var(--font-heading); font-size: clamp(1.05rem, 1.45cqw, 1.55rem); letter-spacing: .02em; opacity: .94;
+      }
+      .tag::before { content: ""; width: 1.4em; height: .2em; border-radius: 999px; background: var(--c-accent); }
+
+      .logo-img { width: clamp(140px, 22cqw, 260px); height: auto; }
+
+      .content { align-self: start; max-width: 85%; margin-top: clamp(1.15rem, 2.2cqw, 2.3rem); }
+      .slide.cover .content { align-self: center; margin-top: 0; }
+      .slide.cover h1 { font-size: clamp(2.2rem, 5.3cqw, 5.3rem); }
+      .slide.content-slide .content { max-width: 88%; margin-top: clamp(1.8rem, 3.2cqw, 3.5rem); }
+      .slide.content-slide h2 { margin-bottom: .9em; }
+      .slide.content-slide .bullets { margin-top: 1.4em; gap: .85em; }
+
+      h1, h2 {
+        font-family: var(--font-heading);
+        letter-spacing: .03em;
+        line-height: 1.12;
+        margin: 0 0 .45em;
+      }
+      h1 { font-size: var(--text-title); }
+      h2 { font-size: var(--text-subtitle); }
+
+      .subtitle {
+        margin-top: .4rem;
+        font-size: clamp(1.1rem, 1.9cqw, 2rem);
+        max-width: 70ch;
+        opacity: .95;
+      }
+
+      .bullets {
+        list-style: none;
+        padding: 0;
+        margin: 1.1em 0 0;
+        display: grid;
+        gap: .8em;
+        font-size: var(--text-body);
+      }
+
+      [data-step] { opacity: 0; transform: translateY(8px); }
+      .is-visible { opacity: 1; transform: translateY(0); }
+      .build-in { animation: riseIn 340ms ease; }
+
+      .bullets li { display: flex; align-items: center; gap: .75em; }
+      .bullets li::before {
+        content: "";
+        width: .62em;
+        height: .62em;
+        border-radius: .2em;
+        background: var(--c-accent);
+        box-shadow: 0 0 0 .18em color-mix(in srgb, var(--c-accent), transparent 74%);
+      }
+      .slide.light .bullets li::before { background: var(--c-wine); }
+
+      .visual-box {
+        margin-top: 1.6em;
+        width: min(74cqw, 760px);
+        border-radius: calc(var(--radius) * .7);
+        border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+        padding: clamp(.8rem, 1.3cqw, 1.3rem);
+        display: grid;
+        gap: .75em;
+        background: color-mix(in oklab, currentColor 7%, transparent);
+        font-size: clamp(0.92rem, 1.25cqw, 1.28rem);
+      }
+
+      .check-row { display: flex; align-items: center; gap: .8em; font-size: var(--text-body); }
+      .check {
+        width: 1.2em; height: 1.2em; border-radius: .35em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 40%);
+        display: grid; place-items: center; font-size: .75em;
+      }
+
+      .package, .submission-package { display: grid; grid-template-columns: 1fr 1fr; gap: .7em; }
+      .folder {
+        border-radius: .7em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
+        padding: .7em;
+      }
+
+      .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8em; }
+      .cards.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .card {
+        border-radius: .9em;
+        border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        padding: 1em;
+        text-align: center;
+        font-size: clamp(0.9rem, 1.2cqw, 1.2rem);
+      }
+      .card .ban {
+        width: 1.6em;
+        height: 1.6em;
+        border-radius: 999px;
+        border: 2px solid var(--c-accent);
+        margin: 0 auto .5em;
+        position: relative;
+        opacity: .72;
+      }
+      .card .ban::after {
+        content: "";
+        position: absolute;
+        left: .18em; right: .18em; top: 50%; height: 2px;
+        background: var(--c-accent);
+        transform: rotate(-35deg);
+      }
+
+      .triangle {
+        margin-top: 1.4em;
+        width: min(54cqw, 520px);
+        aspect-ratio: 1.2;
+        position: relative;
+        border: 2px solid color-mix(in srgb, currentColor, transparent 35%);
+        clip-path: polygon(50% 6%, 5% 94%, 95% 94%);
+      }
+      .triangle span {
+        position: absolute;
+        font-weight: 700;
+        font-family: var(--font-heading);
+      }
+      .triangle .v1 { top: 4%; left: 50%; transform: translateX(-50%); }
+      .triangle .v2 { bottom: 2%; left: 5%; }
+      .triangle .v3 { bottom: 2%; right: 5%; }
+
+      .funnel {
+        margin-top: 1.2em;
+        width: min(60cqw, 560px);
+        height: 150px;
+        border: 2px solid color-mix(in srgb, currentColor, transparent 35%);
+        clip-path: polygon(0 0, 100% 0, 64% 65%, 64% 100%, 36% 100%, 36% 65%);
+      }
+
+      .stack { display: grid; gap: .5em; margin-top: 1.1em; }
+      .stack div {
+        border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
+        background: color-mix(in oklab, currentColor 6%, transparent);
+        border-radius: .6em;
+        padding: .6em .9em;
+      }
+
+      .timeline {
+        margin-top: 1.5em;
+        display: flex;
+        align-items: center;
+        gap: .6em;
+        flex-wrap: wrap;
+        font-size: clamp(1rem, 1.5cqw, 1.4rem);
+        font-weight: 600;
+      }
+      .timeline span::after { content: "→"; margin-left: .6em; color: var(--c-accent); }
+      .timeline span:last-child::after { content: ""; }
+
+      .target {
+        width: 58px; height: 58px; border-radius: 999px;
+        border: 2px solid var(--c-accent); position: relative;
+      }
+      .target::before, .target::after {
+        content: ""; position: absolute; inset: 9px; border: 2px solid color-mix(in srgb, var(--c-accent), transparent 30%); border-radius: 999px;
+      }
+      .target::after { inset: 20px; }
+
+      .route-ab {
+        margin-top: 1.6em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2em;
+      }
+      .route-ab .path {
+        border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
+        border-radius: .8em;
+        padding: 1em;
+      }
+
+      .deck-progress {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        background: color-mix(in srgb, #fff, transparent 90%);
+        z-index: 20;
+      }
+
+      .deck-progress > span {
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: color-mix(in srgb, var(--c-accent), #fff 25%);
+        transition: width 300ms ease;
+      }
+
+      .controls {
+        position: fixed;
+        right: 1.1rem;
+        bottom: 1.1rem;
+        display: flex;
+        gap: .5rem;
+        z-index: 40;
+      }
+
+      .btn {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, .2);
+        background: rgba(8, 8, 36, .72);
+        color: #e7ecf6;
+        padding: .5rem .75rem;
+        border-radius: .6rem;
+        font: 600 .84rem/1 var(--font-body);
+        cursor: pointer;
+      }
+
+      @keyframes riseIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-aspect-ratio: 16/10) {
+        .content { max-width: 94%; }
+        .cards.five { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck" id="deck">
+      <section class="slide dark cover active" data-build="2">
+        <header class="brand">
+          <span class="tag">Módulo 0 • Aula 0.1</span>
+          <img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="content">
+          <h1>Como funciona o curso</h1>
+          <p class="subtitle" data-step="1">Mapa do jogo para transformar conteúdo em execução.</p>
+          <p class="subtitle" data-step="2">Capa limpa • visão geral do método</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="4">
+        <header class="brand"><span class="tag">Objetivo da aula</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O que você precisa sair sabendo hoje</h2>
+          <ul class="bullets">
+            <li data-step="1">Mapa do curso</li>
+            <li data-step="2">Critérios reais de aprovação</li>
+            <li data-step="3">Método Launchpad: foco e cadência</li>
+          </ul>
+          <div class="visual-box" data-step="4">
+            <div class="check-row"><span class="check">✓</span><span>Direção clara</span></div>
+            <div class="check-row"><span class="check">✓</span><span>Próximo passo definido</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="5">
+        <header class="brand"><span class="tag">A promessa</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O que você vai ter ao final</h2>
+          <ul class="bullets">
+            <li data-step="1">Projeto “pronto para competir”</li>
+            <li data-step="2">Adaptável a editais</li>
+            <li data-step="3">Sistema replicável (pra sempre)</li>
+          </ul>
+          <div class="visual-box package" data-step="4">
+            <div class="folder">/projeto.md</div>
+            <div class="folder">/evidencias/</div>
+            <div class="folder">/criterios/</div>
+            <div class="folder">/organizacao/</div>
+          </div>
+          <p class="subtitle" data-step="5">Não é só um texto. É um conjunto de decisões + evidências + organização.</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="5">
+        <header class="brand"><span class="tag">O que o curso não é</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Método, critério e execução. O resto é ruído.</h2>
+          <ul class="bullets">
+            <li data-step="1">Não é promessa de aprovação</li>
+            <li data-step="2">Não é fórmula mágica</li>
+            <li data-step="3">Não é “texto bonito”</li>
+          </ul>
+          <div class="cards" data-step="4">
+            <article class="card"><div class="ban"></div>Sem atalhos</article>
+            <article class="card"><div class="ban"></div>Sem hype vazio</article>
+            <article class="card"><div class="ban"></div>Sem copy cosmética</article>
+          </div>
+          <p class="subtitle" data-step="5">A gente trabalha com método, critério e execução. O resto é ruído.</p>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="5">
+        <header class="brand"><span class="tag">O que aprova projeto</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O triângulo de competitividade</h2>
+          <ul class="bullets">
+            <li data-step="1">Aderência ao edital</li>
+            <li data-step="2">Credibilidade</li>
+            <li data-step="3">Execução</li>
+          </ul>
+          <div class="triangle" data-step="4"><span class="v1">Aderência</span><span class="v2">Credibilidade</span><span class="v3">Execução</span></div>
+          <p class="subtitle" data-step="5">Você pode ter tecnologia excelente e perder por aderência, credibilidade ou execução mal demonstrada.</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="5">
+        <header class="brand"><span class="tag">Aderência ao edital</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O filtro nº1</h2>
+          <ul class="bullets">
+            <li data-step="1">Quem o edital quer financiar</li>
+            <li data-step="2">O que ele considera sucesso</li>
+            <li data-step="3">O que ele rejeita rápido</li>
+          </ul>
+          <div class="funnel" data-step="4"></div>
+          <p class="subtitle" data-step="5">Aderência é linguagem e escopo. É mostrar que você cabe perfeitamente naquele enquadramento.</p>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="5">
+        <header class="brand"><span class="tag">Credibilidade</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Provas &gt; promessas</h2>
+          <ul class="bullets">
+            <li data-step="1">Evidências do que já foi feito</li>
+            <li data-step="2">Time e parceiros coerentes</li>
+            <li data-step="3">Riscos assumidos com plano</li>
+          </ul>
+          <div class="stack" data-step="4"><div>Camada 1 • evidências</div><div>Camada 2 • coerência técnica</div><div>Camada 3 • plano de mitigação</div></div>
+          <p class="subtitle" data-step="5">Credibilidade não é currículo. É consistência entre o que você diz e o que você prova.</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="5">
+        <header class="brand"><span class="tag">Execução</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Plano que dá para acreditar</h2>
+          <ul class="bullets">
+            <li data-step="1">Plano de trabalho lógico</li>
+            <li data-step="2">Orçamento consistente</li>
+            <li data-step="3">Governança e responsabilidade</li>
+          </ul>
+          <div class="visual-box" data-step="4"><div>W1-W4 • Diagnóstico e desenho</div><div>W5-W8 • Escrita e validações</div><div>W9-W12 • Orçamento e submissão <span class="target" style="display:inline-block;vertical-align:middle;margin-left:.6rem"></span></div></div>
+          <p class="subtitle" data-step="5">Execução é onde projeto bom morre: incoerência, lacunas, ou orçamento sem história.</p>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="3">
+        <header class="brand"><span class="tag">A rota do curso</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Ordem que reduz retrabalho</h2>
+          <div class="timeline" data-step="1"><span>Ecossistema</span><span>Estratégia</span><span>Arquitetura</span><span>Escrita</span><span>Orçamento</span><span>Prestação de Contas</span></div>
+          <p class="subtitle" data-step="2">Essa ordem é intencional: primeiro decide, depois escreve.</p>
+          <p class="subtitle" data-step="3">Isso corta 70% do retrabalho.</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="5">
+        <header class="brand"><span class="tag">Missão final</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O pacote de submissão</h2>
+          <ul class="bullets">
+            <li data-step="1">Organização e versões</li>
+            <li data-step="2">Evidências anexáveis</li>
+            <li data-step="3">Pronto para adaptar por edital</li>
+          </ul>
+          <div class="visual-box submission-package" data-step="4">
+            <div class="folder">/texto/</div><div class="folder">/anexos/</div>
+            <div class="folder">/orcamento/</div><div class="folder">/evidencias/</div>
+          </div>
+          <p class="subtitle" data-step="5">Você não entrega “um PDF”. Você entrega um pacote que sobrevive a auditoria e comparação.</p>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="3">
+        <header class="brand"><span class="tag">Regras de ouro</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Assertividade em cinco princípios</h2>
+          <div class="cards five" data-step="1">
+            <article class="card">Foco &gt; volume de editais</article>
+            <article class="card">Clareza &gt; texto longo</article>
+            <article class="card">Provas &gt; promessas</article>
+            <article class="card">Consistência &gt; criatividade</article>
+            <article class="card">Submissão é um projeto</article>
+          </div>
+          <p class="subtitle" data-step="2">Se você seguir só isso, sua taxa de projeto competitivo sobe muito.</p>
+          <p class="subtitle" data-step="3">Menos ruído, mais decisão.</p>
+        </div>
+      </section>
+
+      <section class="slide light content-slide" data-build="4">
+        <header class="brand"><span class="tag">Call to action</span><img class="logo-img" src="../teste/assets/Logo-dark.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>O que fazer agora</h2>
+          <ul class="bullets">
+            <li data-step="1">Não escreva nada ainda</li>
+            <li data-step="2">Prepare o terreno</li>
+            <li data-step="3">Próximo: diagnóstico do projeto</li>
+          </ul>
+          <div class="visual-box" data-step="4"><div>🛑 Pare de escrever por impulso</div><div>➡ Próximo passo: diagnóstico, clareza e decisão</div></div>
+        </div>
+      </section>
+
+      <section class="slide dark content-slide" data-build="3">
+        <header class="brand"><span class="tag">Fechamento</span><img class="logo-img" src="../teste/assets/Logo-light.png" alt="Launchpad Hub" /></header>
+        <div class="content">
+          <h2>Como você vai usar este curso: como conteúdo ou como execução?</h2>
+          <div class="route-ab" data-step="1">
+            <div class="path">Rota A: assistir e acumular vídeos</div>
+            <div class="path">Rota B: executar junto e colher resultado</div>
+          </div>
+          <p class="subtitle" data-step="2">Quem executa junto, colhe.</p>
+          <p class="subtitle" data-step="3">Quem só assiste, acumula vídeo.</p>
+        </div>
+      </section>
+
+      <div class="deck-progress" aria-hidden="true"><span id="progressBar"></span></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prevBtn" type="button">← Anterior</button>
+      <button class="btn" id="nextBtn" type="button">Próximo →</button>
+      <button class="btn" id="kioskBtn" type="button">Kiosk</button>
+    </div>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const progressBar = document.getElementById('progressBar');
+      let currentSlide = 0;
+      let buildStep = 0;
+
+      const stepElements = (slide, step) => Array.from(slide.querySelectorAll(`[data-step="${step}"]`));
+
+      const setProgress = () => {
+        const total = slides.length;
+        const value = ((currentSlide + 1) / total) * 100;
+        progressBar.style.width = `${value}%`;
+      };
+
+      const clearBuild = (slide) => {
+        Array.from(slide.querySelectorAll('[data-step]')).forEach((el) => {
+          el.classList.remove('is-visible', 'build-in');
+        });
+      };
+
+      const revealStep = (slide, step, animate = true) => {
+        stepElements(slide, step).forEach((el) => {
+          el.classList.add('is-visible');
+          if (animate) {
+            el.classList.remove('build-in');
+            void el.offsetWidth;
+            el.classList.add('build-in');
+          }
+        });
+      };
+
+      const hideStep = (slide, step) => {
+        stepElements(slide, step).forEach((el) => {
+          el.classList.remove('is-visible', 'build-in');
+        });
+      };
+
+      const activateSlide = (idx, withFinalState = false) => {
+        slides.forEach((s, sIdx) => s.classList.toggle('active', sIdx === idx));
+        currentSlide = idx;
+        clearBuild(slides[idx]);
+
+        const max = Number(slides[idx].dataset.build || 0);
+        buildStep = withFinalState ? max : 0;
+        for (let step = 1; step <= buildStep; step += 1) revealStep(slides[idx], step, false);
+
+        setProgress();
+      };
+
+      const next = () => {
+        const slide = slides[currentSlide];
+        const maxBuild = Number(slide.dataset.build || 0);
+        if (buildStep < maxBuild) {
+          buildStep += 1;
+          revealStep(slide, buildStep, true);
+          return;
+        }
+        if (currentSlide < slides.length - 1) activateSlide(currentSlide + 1);
+      };
+
+      const prev = () => {
+        if (buildStep > 0) {
+          hideStep(slides[currentSlide], buildStep);
+          buildStep -= 1;
+          return;
+        }
+        if (currentSlide > 0) activateSlide(currentSlide - 1, true);
+      };
+
+      const toggleFullscreen = async () => {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      };
+
+      document.getElementById('nextBtn').addEventListener('click', next);
+      document.getElementById('prevBtn').addEventListener('click', prev);
+      document.getElementById('kioskBtn').addEventListener('click', toggleFullscreen);
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+          event.preventDefault();
+          next();
+        }
+        if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+          event.preventDefault();
+          prev();
+        }
+        if (event.key.toLowerCase() === 'f') toggleFullscreen();
+      });
+
+      activateSlide(0);
+    </script>
+  </body>
+</html>
