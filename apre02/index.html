@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 0.1 &#8212; Mapa do Jogo | Launchpad Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Shared Design System -->
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/deck.css" />
+    <link rel="stylesheet" href="../styles/slide-presets.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+
+    <!-- Presentation-specific visuals -->
+    <style>
+      /* ── Milestones (cover slide) ── */
+      .slide-milestones {
+        display: flex;
+        gap: 0.8em;
+        margin-top: 1.8em;
+      }
+
+      .slide-milestone {
+        flex: 1;
+        text-align: center;
+        border-radius: calc(var(--radius-base) * 0.6);
+        border: 1px solid color-mix(in oklab, currentColor 22%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        padding: 0.9em 0.5em;
+        font-size: var(--font-size-small);
+      }
+
+      .slide-milestone__num {
+        display: block;
+        font-family: var(--font-heading);
+        font-size: var(--font-size-lead);
+        color: var(--color-accent);
+        margin-bottom: 0.25em;
+      }
+
+      /* ── Comparison columns ── */
+      .slide-compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+        margin-top: 1.4em;
+        font-size: var(--font-size-small);
+      }
+
+      .slide-compare__col {
+        border-radius: calc(var(--radius-base) * 0.7);
+        border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        padding: clamp(0.7rem, 1.2cqw, 1.2rem);
+      }
+
+      .slide-compare__header {
+        font-family: var(--font-heading);
+        font-size: var(--font-size-caption);
+        letter-spacing: 0.03em;
+        padding-bottom: 0.5em;
+        margin-bottom: 0.6em;
+        border-bottom: 2px solid color-mix(in oklab, currentColor 16%, transparent);
+      }
+
+      .slide-compare__header--positive {
+        border-color: var(--color-accent);
+      }
+
+      .slide-compare__list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.5em;
+      }
+
+      .slide-compare__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+      }
+
+      .slide-compare__marker {
+        flex-shrink: 0;
+        font-weight: 700;
+      }
+
+      .slide-compare__marker--check {
+        color: var(--color-accent);
+      }
+
+      .slide-compare__marker--cross {
+        opacity: 0.45;
+      }
+
+      /* ── Triangle ── */
+      .slide-triangle {
+        margin-top: var(--space-lg);
+        width: min(48cqw, 460px);
+        aspect-ratio: 1.2;
+        position: relative;
+        border: 2px solid color-mix(in srgb, currentColor, transparent 35%);
+        clip-path: polygon(50% 6%, 5% 94%, 95% 94%);
+      }
+
+      .slide-triangle span {
+        position: absolute;
+        font-weight: 700;
+        font-family: var(--font-heading);
+        font-size: var(--font-size-caption);
+      }
+
+      .slide-triangle .v1 { top: 4%; left: 50%; transform: translateX(-50%); }
+      .slide-triangle .v2 { bottom: 2%; left: 5%; }
+      .slide-triangle .v3 { bottom: 2%; right: 5%; }
+
+      /* ── Loop / Cycle ── */
+      .slide-loop {
+        margin-top: 1.5em;
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+        flex-wrap: wrap;
+        font-size: clamp(0.95rem, 1.4cqw, 1.35rem);
+        font-weight: 600;
+      }
+
+      .slide-loop__step {
+        padding: 0.4em 0.7em;
+        border-radius: calc(var(--radius-base) * 0.5);
+        border: 1px solid color-mix(in oklab, currentColor 24%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+      }
+
+      .slide-loop__arrow {
+        color: var(--color-accent);
+        font-size: 1.1em;
+      }
+
+      /* ── Pipeline ── */
+      .slide-pipeline {
+        margin-top: 1.2em;
+        display: flex;
+        align-items: center;
+        gap: 0.35em;
+        flex-wrap: wrap;
+        font-size: clamp(0.82rem, 1.15cqw, 1.15rem);
+        font-weight: 600;
+      }
+
+      .slide-pipeline__step {
+        padding: 0.35em 0.55em;
+        border-radius: calc(var(--radius-base) * 0.4);
+        border: 1px solid color-mix(in oklab, currentColor 22%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+      }
+
+      .slide-pipeline__arrow {
+        color: var(--color-accent);
+      }
+
+      /* ── Roadmap ── */
+      .slide-roadmap {
+        margin-top: 1.2em;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 0.45em;
+      }
+
+      .slide-roadmap__module {
+        border-radius: calc(var(--radius-base) * 0.5);
+        border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        padding: 0.55em;
+      }
+
+      .slide-roadmap__title {
+        font-family: var(--font-heading);
+        font-size: clamp(0.68rem, 0.9cqw, 0.9rem);
+        color: var(--color-accent);
+        margin-bottom: 0.25em;
+      }
+
+      .slide-roadmap__items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: clamp(0.62rem, 0.82cqw, 0.82rem);
+        line-height: 1.35;
+      }
+
+      /* ── Sequence (steps with alert) ── */
+      .slide-sequence {
+        margin-top: 1.5em;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+      }
+
+      .slide-sequence__step {
+        flex: 1;
+        text-align: center;
+        padding: 0.8em 0.5em;
+        border-radius: calc(var(--radius-base) * 0.6);
+        border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+        background: color-mix(in oklab, currentColor 5%, transparent);
+        font-size: var(--font-size-small);
+        font-weight: 600;
+      }
+
+      .slide-sequence__step--alert {
+        border-color: var(--color-accent);
+        background: color-mix(in srgb, var(--color-accent), transparent 88%);
+      }
+
+      .slide-sequence__arrow {
+        color: var(--color-accent);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* ── Card grid variants ── */
+      .slide-cards--2col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .slide-cards--4col {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      /* ── Card with accent title ── */
+      .slide-card__title {
+        font-family: var(--font-heading);
+        font-size: var(--font-size-caption);
+        color: var(--color-accent);
+        margin-bottom: 0.35em;
+      }
+
+      .slide-card__question {
+        font-weight: 600;
+        margin-bottom: 0.35em;
+        font-size: var(--font-size-caption);
+      }
+
+      /* ── Responsive overrides ── */
+      @media (max-aspect-ratio: 16/10) {
+        .slide-milestones { flex-wrap: wrap; }
+        .slide-milestones .slide-milestone { flex-basis: 40%; }
+        .slide-compare { grid-template-columns: 1fr; }
+        .slide-cards--4col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .slide-roadmap { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck" id="deck">
+
+      <!-- ═══ Slide 1 — Cover: Mapa do jogo ═══ -->
+      <section class="slide dark cover active" data-build="2">
+        <header class="slide-brand">
+          <span class="slide-tag">M&#243;dulo 0 &#8226; Aula 0.1</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h1>Mapa do jogo</h1>
+          <p class="slide-lead" data-step="1">O sistema operacional do curso em 4 marcos.</p>
+          <div class="slide-milestones" data-step="2">
+            <div class="slide-milestone"><span class="slide-milestone__num">1</span>Expectativa</div>
+            <div class="slide-milestone"><span class="slide-milestone__num">2</span>Crit&#233;rios</div>
+            <div class="slide-milestone"><span class="slide-milestone__num">3</span>Rota</div>
+            <div class="slide-milestone"><span class="slide-milestone__num">4</span>Miss&#227;o</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 2 — O contrato do curso ═══ -->
+      <section class="slide light content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Expectativas</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>O contrato do curso</h2>
+          <div class="slide-compare" data-step="1">
+            <div class="slide-compare__col">
+              <div class="slide-compare__header slide-compare__header--positive">&#10003; Como usar</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Tratar como projeto com entregas e marcos</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Priorizar execu&#231;&#227;o sobre consumo</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Usar checklists e templates como padr&#227;o</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Dizer &#8220;n&#227;o&#8221; para o que dispersa</li>
+              </ul>
+            </div>
+            <div class="slide-compare__col">
+              <div class="slide-compare__header">&#10007; Como N&#195;O usar</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Assistir passivamente e acumular v&#237;deos</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Consumir conte&#250;do sem produzir nada</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Pular templates e improvisar formato</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Submeter para tudo sem filtro</li>
+              </ul>
+            </div>
+          </div>
+          <p class="slide-lead" data-step="2">Evita o erro cl&#225;ssico: assistir tudo e terminar sem submiss&#227;o pronta.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 3 — Promessa: projeto pronto para competir ═══ -->
+      <section class="slide dark content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Promessa</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Projeto pronto para competir</h2>
+          <div class="slide-cards slide-cards--2col" data-step="1">
+            <article class="slide-card">
+              <div class="slide-card__title">Projeto financi&#225;vel</div>
+              Narrativa + evid&#234;ncias + execu&#231;&#227;o alinhadas. Pacote com vers&#245;es, anexos e trilha de prova.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__title">Sistema replic&#225;vel</div>
+              L&#243;gica de avaliador aplicada: ader&#234;ncia, risco, execu&#231;&#227;o e impacto. Estrutura reaproveit&#225;vel para novos editais.
+            </article>
+          </div>
+          <p class="slide-lead" data-step="2">Voc&#234; sai com ativo reutiliz&#225;vel &#8212; n&#227;o com um texto que morre no pr&#243;ximo edital.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 4 — O curso não é isso ═══ -->
+      <section class="slide light content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Promessa</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Cortando ilus&#245;es que custam caro</h2>
+          <div class="slide-compare" data-step="1">
+            <div class="slide-compare__col">
+              <div class="slide-compare__header">&#10007; Mitos</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Aprova&#231;&#227;o garantida</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>F&#243;rmula m&#225;gica ou atalho</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>&#8220;Texto bonito&#8221; basta</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Submeter para tudo d&#225; resultado</li>
+              </ul>
+            </div>
+            <div class="slide-compare__col">
+              <div class="slide-compare__header slide-compare__header--positive">&#10003; Crit&#233;rios reais</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Competi&#231;&#227;o: depende do edital</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Prova + consist&#234;ncia aprovam</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Clareza t&#233;cnica vence ret&#243;rica</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Foco e ader&#234;ncia superam volume</li>
+              </ul>
+            </div>
+          </div>
+          <p class="slide-lead" data-step="2">Menos frustra&#231;&#227;o, mais controle: voc&#234; atua no que est&#225; na sua m&#227;o.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 5 — O que aprova: 3 critérios ═══ -->
+      <section class="slide dark content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">Crit&#233;rios de aprova&#231;&#227;o</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>3 dimens&#245;es que aprovam projetos</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Aderir ao edital: resolver o problema do edital, n&#227;o o seu sonho</li>
+            <li class="slide-bullet-item" data-step="2">Construir credibilidade: evid&#234;ncias t&#233;cnicas + lastro de equipe</li>
+            <li class="slide-bullet-item" data-step="3">Provar execu&#231;&#227;o: plano, governan&#231;a, riscos e or&#231;amento coerente</li>
+          </ul>
+          <div class="slide-triangle" data-step="4">
+            <span class="v1">Ader&#234;ncia</span>
+            <span class="v2">Credibilidade</span>
+            <span class="v3">Execu&#231;&#227;o</span>
+          </div>
+          <p class="slide-lead" data-step="5">Filtro r&#225;pido Go/No-Go para avaliar qualquer oportunidade.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 6 — Como provar: 3 pilares auditáveis ═══ -->
+      <section class="slide light content-slide" data-build="4">
+        <header class="slide-brand">
+          <span class="slide-tag">Crit&#233;rios de aprova&#231;&#227;o</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>O que o avaliador consegue verificar</h2>
+          <div class="slide-cards" data-step="1">
+            <article class="slide-card">
+              <div class="slide-card__question">&#8220;O risco &#233; real?&#8221;</div>
+              Hip&#243;tese, incertezas, TRL e plano de valida&#231;&#227;o expl&#237;citos.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__question">&#8220;D&#225; para executar?&#8221;</div>
+              Equipe, infraestrutura, parceiros, cronograma e governan&#231;a.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__question">&#8220;Vale a pena?&#8221;</div>
+              Mercado, diferencial, externalidades e m&#233;tricas de impacto.
+            </article>
+          </div>
+          <p class="slide-lead" data-step="2">Sai o &#8220;pitch&#8221;; entra a l&#243;gica verific&#225;vel que reduz d&#250;vida do avaliador.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 7 — O método Launchpad ═══ -->
+      <section class="slide dark content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">M&#233;todo</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Foco, cad&#234;ncia, execu&#231;&#227;o</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Definir foco: 1 edital-alvo + 1 entrega por semana</li>
+            <li class="slide-bullet-item" data-step="2">Estabelecer cad&#234;ncia: marcos, rituais e controle de qualidade</li>
+            <li class="slide-bullet-item" data-step="3">Executar com padr&#227;o: templates, checklist e trilha de evid&#234;ncias</li>
+          </ul>
+          <div class="slide-loop" data-step="4">
+            <span class="slide-loop__step">Foco</span>
+            <span class="slide-loop__arrow">&#8594;</span>
+            <span class="slide-loop__step">Cad&#234;ncia</span>
+            <span class="slide-loop__arrow">&#8594;</span>
+            <span class="slide-loop__step">Execu&#231;&#227;o</span>
+            <span class="slide-loop__arrow">&#8594;</span>
+            <span class="slide-loop__step">Revis&#227;o</span>
+            <span class="slide-loop__arrow">&#8635;</span>
+          </div>
+          <p class="slide-lead" data-step="5">Parar de &#8220;tentar escrever&#8221; e come&#231;ar a construir submiss&#227;o.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 8 — Rota do curso ═══ -->
+      <section class="slide light content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">Rota</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Ordem que reduz retrabalho</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Come&#231;ar no ecossistema: entender instrumentos e regras do jogo</li>
+            <li class="slide-bullet-item" data-step="2">Definir estrat&#233;gia: escolher edital certo e dizer &#8220;n&#227;o&#8221; ao resto</li>
+            <li class="slide-bullet-item" data-step="3">Montar arquitetura: pilares e evid&#234;ncias antes do texto</li>
+          </ul>
+          <div class="slide-pipeline" data-step="4">
+            <span class="slide-pipeline__step">Ecossistema</span>
+            <span class="slide-pipeline__arrow">&#8594;</span>
+            <span class="slide-pipeline__step">Estrat&#233;gia</span>
+            <span class="slide-pipeline__arrow">&#8594;</span>
+            <span class="slide-pipeline__step">Arquitetura</span>
+            <span class="slide-pipeline__arrow">&#8594;</span>
+            <span class="slide-pipeline__step">Escrita</span>
+            <span class="slide-pipeline__arrow">&#8594;</span>
+            <span class="slide-pipeline__step">Or&#231;amento</span>
+            <span class="slide-pipeline__arrow">&#8594;</span>
+            <span class="slide-pipeline__step">Presta&#231;&#227;o de Contas</span>
+          </div>
+          <p class="slide-lead" data-step="5">Primeiro decide, depois escreve. Isso corta 70% do retrabalho.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 9 — Módulo 0: diagnóstico ═══ -->
+      <section class="slide dark content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">M&#243;dulo 0</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Diagn&#243;stico e caminho curto</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Diagnosticar maturidade: TRL, evid&#234;ncias, lacunas e riscos</li>
+            <li class="slide-bullet-item" data-step="2">Definir alvo: 1&#8211;2 chamadas compat&#237;veis com o est&#225;gio</li>
+            <li class="slide-bullet-item" data-step="3">Preparar o terreno: insumos antes de escrever</li>
+            <li class="slide-bullet-item" data-step="4">Estabelecer rotina: cad&#234;ncia e padr&#227;o de qualidade</li>
+          </ul>
+          <p class="slide-lead" data-step="5">Reduz o tempo at&#233; submiss&#227;o: come&#231;ar pelo que trava a aprova&#231;&#227;o.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 10 — Módulo 1: ecossistema ═══ -->
+      <section class="slide light content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">M&#243;dulo 1</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Ecossistema sem confus&#227;o</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Mapear instrumentos: subven&#231;&#227;o, cr&#233;dito, bolsas, EMBRAPII&#8230;</li>
+            <li class="slide-bullet-item" data-step="2">Ler restri&#231;&#245;es: TRL alvo, elegibilidade e contrapartidas</li>
+            <li class="slide-bullet-item" data-step="3">Conectar instrumento ao est&#225;gio: pesquisa, valida&#231;&#227;o, piloto, escala</li>
+            <li class="slide-bullet-item" data-step="4">Evitar armadilhas: chamadas que consomem energia sem encaixe</li>
+          </ul>
+          <p class="slide-lead" data-step="5">Menos dispers&#227;o; mais taxa de &#8220;editais que valem a pena&#8221;.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 11 — Módulos 2–5 + Bônus ═══ -->
+      <section class="slide dark content-slide" data-build="6">
+        <header class="slide-brand">
+          <span class="slide-tag">M&#243;dulos 2&#8211;5</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Do edital &#224; execu&#231;&#227;o</h2>
+          <div class="slide-roadmap" data-step="1">
+            <div class="slide-roadmap__module">
+              <div class="slide-roadmap__title">M2 Estrat&#233;gia</div>
+              <ul class="slide-roadmap__items"><li>Ler como avaliador</li><li>Ader&#234;ncia e pipeline</li></ul>
+            </div>
+            <div class="slide-roadmap__module">
+              <div class="slide-roadmap__title">M3 Arquitetura</div>
+              <ul class="slide-roadmap__items"><li>Pilares de aprova&#231;&#227;o</li><li>Storytelling t&#233;cnico</li></ul>
+            </div>
+            <div class="slide-roadmap__module">
+              <div class="slide-roadmap__title">M4 Escrita</div>
+              <ul class="slide-roadmap__items"><li>Campo a campo</li><li>Or&#231;amento coerente</li></ul>
+            </div>
+            <div class="slide-roadmap__module">
+              <div class="slide-roadmap__title">M5 Execu&#231;&#227;o</div>
+              <ul class="slide-roadmap__items"><li>Governan&#231;a e provas</li><li>Redu&#231;&#227;o de glosa</li></ul>
+            </div>
+            <div class="slide-roadmap__module">
+              <div class="slide-roadmap__title">B&#244;nus</div>
+              <ul class="slide-roadmap__items"><li>Proje&#231;&#245;es e IA</li><li>Editais FINEP 2026</li></ul>
+            </div>
+          </div>
+          <p class="slide-lead" data-step="2">O m&#233;todo fecha o ciclo: voc&#234; n&#227;o ganha no texto e perde na execu&#231;&#227;o.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 12 — Missão Final: por que ela existe ═══ -->
+      <section class="slide light content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Miss&#227;o Final</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>O resultado que muda seu jogo</h2>
+          <div class="slide-cards slide-cards--4col" data-step="1">
+            <article class="slide-card">
+              <div class="slide-card__title">Converter</div>
+              Aprendizado vira submiss&#227;o concreta, n&#227;o &#8220;entendimento&#8221;.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__title">Consistir</div>
+              Narrativa, plano, riscos, or&#231;amento e anexos alinhados.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__title">Defender</div>
+              Evid&#234;ncias organizadas para auditoria do avaliador.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__title">Replicar</div>
+              Estrutura reaproveit&#225;vel para novas chamadas.
+            </article>
+          </div>
+          <p class="slide-lead" data-step="2">Voc&#234; sai com algo que pode ser submetido, defendido e melhorado iterativamente.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 13 — Pacote de submissão ═══ -->
+      <section class="slide dark content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">Miss&#227;o Final</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Organiza&#231;&#227;o que reduz erro e estresse</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Padronizar estrutura: pastas, nomes, vers&#245;es e respons&#225;veis</li>
+            <li class="slide-bullet-item" data-step="2">Controlar mudan&#231;as: hist&#243;rico e checkpoints</li>
+            <li class="slide-bullet-item" data-step="3">Amarrar evid&#234;ncias: anexos que sustentam cada afirma&#231;&#227;o</li>
+          </ul>
+          <div class="slide-panel slide-panel--grid" data-step="4">
+            <div class="slide-folder">/texto/</div>
+            <div class="slide-folder">/anexos/</div>
+            <div class="slide-folder">/orcamento/</div>
+            <div class="slide-folder">/evidencias/</div>
+            <div class="slide-folder">/versoes/</div>
+            <div class="slide-folder">/checklist-final.md</div>
+          </div>
+          <p class="slide-lead" data-step="5">Reduz risco de &#8220;falha boba&#8221; e aumenta a confian&#231;a &#8212; sua e do avaliador.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 14 — Foco e Clareza ═══ -->
+      <section class="slide light content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Regras de ouro</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Duas trocas que mudam tudo</h2>
+          <div class="slide-compare" data-step="1">
+            <div class="slide-compare__col">
+              <div class="slide-compare__header slide-compare__header--positive">Foco</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>1 edital com encaixe real</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>Frases curtas que decidem</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>S&#243; o que sustenta argumento</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--check">&#10003;</span>&#8220;Isso responde o avaliador?&#8221;</li>
+              </ul>
+            </div>
+            <div class="slide-compare__col">
+              <div class="slide-compare__header">Volume</div>
+              <ul class="slide-compare__list">
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Submeter para ver o que cola</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Texto longo que dilui a tese</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Tudo que &#8220;parece relevante&#8221;</li>
+                <li class="slide-compare__item"><span class="slide-compare__marker slide-compare__marker--cross">&#10007;</span>Impressionar com p&#225;ginas</li>
+              </ul>
+            </div>
+          </div>
+          <p class="slide-lead" data-step="2">Ser entendido rapidamente &#233; pr&#233;-condi&#231;&#227;o de confian&#231;a.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 15 — Prova, consistência, submissão ═══ -->
+      <section class="slide dark content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">Regras de ouro</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>O que separa amador de consistente</h2>
+          <div class="slide-panel" data-step="1">
+            <div class="slide-check-row"><span class="slide-check">&#10003;</span><span>Dados, experimentos, pilotos e benchmarks &#8212; n&#227;o promessas</span></div>
+            <div class="slide-check-row"><span class="slide-check">&#10003;</span><span>Narrativa &#8596; plano &#8596; or&#231;amento &#8596; anexos coerentes</span></div>
+          </div>
+          <div class="slide-panel" data-step="2">
+            <div class="slide-check-row"><span class="slide-check">&#10003;</span><span>Cronograma de submiss&#227;o com respons&#225;veis e &#8220;gate&#8221; final</span></div>
+            <div class="slide-check-row"><span class="slide-check">&#10003;</span><span>Inovar no conte&#250;do, n&#227;o no formato confuso</span></div>
+          </div>
+          <p class="slide-lead" data-step="3">Reduz risco de incoer&#234;ncia &#8212; um dos motivos mais comuns de perda de confian&#231;a.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 16 — Não escreva nada ainda ═══ -->
+      <section class="slide light content-slide" data-build="5">
+        <header class="slide-brand">
+          <span class="slide-tag">Pr&#243;ximo passo</span>
+          <img class="slide-logo" src="../assets/Logo-dark.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>N&#227;o escreva nada ainda</h2>
+          <ul class="slide-bullets">
+            <li class="slide-bullet-item" data-step="1">Levantar dados m&#237;nimos: status t&#233;cnico, TRL e lacunas</li>
+            <li class="slide-bullet-item" data-step="2">Definir alvo: 1 chamada prov&#225;vel + 1 alternativa</li>
+            <li class="slide-bullet-item" data-step="3">Montar esqueleto: problema, solu&#231;&#227;o, diferencial, riscos e plano</li>
+          </ul>
+          <div class="slide-sequence" data-step="4">
+            <span class="slide-sequence__step">Preparar</span>
+            <span class="slide-sequence__arrow">&#8594;</span>
+            <span class="slide-sequence__step">Estruturar</span>
+            <span class="slide-sequence__arrow">&#8594;</span>
+            <span class="slide-sequence__step">Escrever</span>
+            <span class="slide-sequence__arrow">&#8594;</span>
+            <span class="slide-sequence__step slide-sequence__step--alert">Submeter</span>
+          </div>
+          <p class="slide-lead" data-step="5">Arquitetura primeiro, reda&#231;&#227;o depois. Come&#231;ar do jeito certo.</p>
+        </div>
+      </section>
+
+      <!-- ═══ Slide 17 — Fechamento: compromisso de uso ═══ -->
+      <section class="slide dark content-slide" data-build="3">
+        <header class="slide-brand">
+          <span class="slide-tag">Encerramento</span>
+          <img class="slide-logo" src="../assets/Logo-light.png" alt="Launchpad Hub" />
+        </header>
+        <div class="slide-content">
+          <h2>Compromisso de uso</h2>
+          <div class="slide-cards slide-cards--4col" data-step="1">
+            <article class="slide-card">
+              <div class="slide-card__question">Qual chamada voc&#234; vai priorizar?</div>
+              Escolha um foco.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__question">Qual entrega concreta toda semana?</div>
+              Defina cad&#234;ncia.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__question">Qual checklist para revisar?</div>
+              Assuma um padr&#227;o.
+            </article>
+            <article class="slide-card">
+              <div class="slide-card__question">O que voc&#234; vai parar de fazer?</div>
+              Registre a decis&#227;o.
+            </article>
+          </div>
+          <p class="slide-lead" data-step="2">Saia com uma decis&#227;o operacional &#8212; n&#227;o s&#243; com inspira&#231;&#227;o.</p>
+        </div>
+      </section>
+
+      <div class="deck-progress" aria-hidden="true"><span id="progressBar"></span></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prevBtn" type="button">&larr; Anterior</button>
+      <button class="btn" id="nextBtn" type="button">Pr&#243;ximo &rarr;</button>
+      <button class="btn" id="kioskBtn" type="button">Kiosk</button>
+    </div>
+
+    <script src="../scripts/deck-engine.js"></script>
+  </body>
+</html>
