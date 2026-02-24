@@ -1,0 +1,60 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Design Tokens — Launchpad Hub Presentation System
+   Single source of truth for all visual properties.
+   Edit this file to update the design system globally.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─── Core Palette ───
+     Raw color values. Never use directly in components;
+     always reference through semantic aliases below.            */
+  --c-navy-950: #070a12;
+  --c-navy-900: #080824;
+  --c-purple-900: #241445;
+  --c-light-100: #e7ecf6;
+  --c-light-200: #c8d2e8;
+  --c-accent: #f20f46;
+  --c-wine: #7b0037;
+
+  /* ─── Semantic Colors ───
+     Use these in all component CSS.                             */
+  --color-bg: var(--c-navy-900);
+  --color-bg-deep: var(--c-navy-950);
+  --color-bg-surface: var(--c-light-100);
+  --color-bg-surface-alt: var(--c-light-200);
+  --color-text: var(--c-light-100);
+  --color-text-muted: var(--c-light-200);
+  --color-text-inverse: var(--c-navy-900);
+  --color-accent: var(--c-accent);
+  --color-accent-strong: var(--c-wine);
+
+  /* ─── Typography ─── */
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --font-size-display: clamp(2.2rem, 5.3cqw, 5.3rem);
+  --font-size-title: clamp(1.8rem, 4.8cqw, 5rem);
+  --font-size-subtitle: clamp(1.2rem, 2.75cqw, 2.95rem);
+  --font-size-lead: clamp(1.1rem, 1.9cqw, 2rem);
+  --font-size-body: clamp(1.12rem, 1.95cqw, 1.95rem);
+  --font-size-small: clamp(0.92rem, 1.25cqw, 1.28rem);
+  --font-size-caption: clamp(0.82rem, 1.08cqw, 1.22rem);
+  --font-size-tag: clamp(1.05rem, 1.45cqw, 1.55rem);
+
+  --line-height-tight: 1.12;
+  --line-height-body: 1.4;
+  --line-height-reset: 1;
+
+  /* ─── Spacing ─── */
+  --space-layout: clamp(1rem, 2.3cqw, 2.8rem);
+  --space-xs: 0.45em;
+  --space-sm: 0.75em;
+  --space-md: 1em;
+  --space-lg: 1.4em;
+
+  /* ─── Layout ─── */
+  --slide-width: min(95vw, 180vh);
+  --slide-height: min(95vh, 56.25vw);
+  --radius-base: clamp(10px, 1.2cqw, 24px);
+  --logo-width: clamp(140px, 22cqw, 260px);
+}

@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Deck Shell — base layout, themes, transitions, navigation
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: radial-gradient(circle at top, #0f1730 5%, #060712 70%);
+  color: var(--color-text);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* ─── Deck Container ─── */
+.deck {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  position: relative;
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  box-shadow: 0 20px 90px rgba(0, 0, 0, 0.45);
+  container-type: inline-size;
+}
+
+/* ─── Slide Base ─── */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: var(--space-layout);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  opacity: 0;
+  transform: translateX(3%);
+  transition: opacity 420ms ease, transform 420ms ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* ─── Theme: Dark ─── */
+.slide.dark {
+  background: linear-gradient(145deg, var(--color-bg), #030316 72%);
+  color: var(--color-text);
+}
+
+/* ─── Theme: Light ─── */
+.slide.light {
+  background: linear-gradient(145deg, var(--color-bg-surface), var(--color-bg-surface-alt));
+  color: var(--color-text-inverse);
+}
+
+/* ─── Build-Step Animation ─── */
+[data-step] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.build-in {
+  animation: riseIn 340ms ease;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Progress Bar ─── */
+.deck-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: color-mix(in srgb, #fff, transparent 90%);
+  z-index: 20;
+}
+
+.deck-progress > span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: color-mix(in srgb, var(--color-accent), #fff 25%);
+  transition: width 300ms ease;
+}
+
+/* ─── Navigation Controls ─── */
+.controls {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 40;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(8, 8, 36, 0.72);
+  color: var(--color-text);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.6rem;
+  font: 600 0.84rem / var(--line-height-reset) var(--font-body);
+  cursor: pointer;
+}
+
+/* ─── Responsive ─── */
+@media (max-aspect-ratio: 16/10) {
+  .slide-content {
+    max-width: 94%;
+  }
+
+  .slide-cards--5col {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
