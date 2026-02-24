@@ -39,8 +39,11 @@
 /* ─── Content Area ─── */
 .slide-content {
   align-self: start;
-  max-width: 85%;
-  margin-top: clamp(1.15rem, 2.2cqw, 2.3rem);
+  max-width: 90%;
+  margin-top: clamp(1.4rem, 2.8cqw, 3rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.8rem, 1.5cqw, 1.6rem);
 }
 
 /* ─── Headings ─── */
@@ -49,7 +52,7 @@ h2 {
   font-family: var(--font-heading);
   letter-spacing: 0.03em;
   line-height: var(--line-height-tight);
-  margin: 0 0 0.45em;
+  margin: 0;
 }
 
 h1 {
@@ -60,21 +63,22 @@ h2 {
   font-size: var(--font-size-subtitle);
 }
 
-/* ─── Lead Text ─── */
+/* ─── Lead Text (subtitle / takeaway) ─── */
 .slide-lead {
-  margin-top: 0.4rem;
   font-size: var(--font-size-lead);
   max-width: 70ch;
-  opacity: 0.95;
+  opacity: 0.88;
+  margin: 0;
+  line-height: 1.4;
 }
 
 /* ─── Bullet List ─── */
 .slide-bullets {
   list-style: none;
   padding: 0;
-  margin: 1.1em 0 0;
+  margin: 0;
   display: grid;
-  gap: 0.8em;
+  gap: 1em;
   font-size: var(--font-size-body);
 }
 
@@ -82,6 +86,7 @@ h2 {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  line-height: 1.45;
 }
 
 .slide-bullet-item::before {
@@ -100,15 +105,14 @@ h2 {
 
 /* ─── Panel (bordered content box) ─── */
 .slide-panel {
-  margin-top: 1.6em;
-  width: min(74cqw, 760px);
+  width: min(78cqw, 820px);
   border-radius: calc(var(--radius-base) * 0.7);
   border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
-  padding: clamp(0.8rem, 1.3cqw, 1.3rem);
+  padding: clamp(1rem, 1.6cqw, 1.6rem);
   display: grid;
-  gap: 0.75em;
+  gap: 0.9em;
   background: color-mix(in oklab, currentColor 7%, transparent);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-body);
 }
 
 .slide-panel--grid {
@@ -121,23 +125,25 @@ h2 {
   align-items: center;
   gap: 0.8em;
   font-size: var(--font-size-body);
+  line-height: 1.45;
 }
 
 .slide-check {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.3em;
+  height: 1.3em;
   border-radius: 0.35em;
   border: 1px solid color-mix(in srgb, currentColor, transparent 40%);
   display: grid;
   place-items: center;
-  font-size: 0.75em;
+  font-size: 0.8em;
+  flex-shrink: 0;
 }
 
 /* ─── Card Grid ─── */
 .slide-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8em;
+  gap: 1em;
 }
 
 .slide-cards--5col {
@@ -148,30 +154,31 @@ h2 {
   border-radius: 0.9em;
   border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
   background: color-mix(in oklab, currentColor 5%, transparent);
-  padding: 1em;
+  padding: 1.2em;
   text-align: center;
-  font-size: clamp(0.9rem, 1.2cqw, 1.2rem);
+  font-size: clamp(0.95rem, 1.3cqw, 1.3rem);
+  line-height: 1.5;
 }
 
 /* ─── Folder ─── */
 .slide-folder {
   border-radius: 0.7em;
   border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
-  padding: 0.7em;
+  padding: 0.8em;
+  font-size: var(--font-size-body);
 }
 
 /* ─── Stack (vertical list) ─── */
 .slide-stack {
   display: grid;
-  gap: 0.5em;
-  margin-top: 1.1em;
+  gap: 0.6em;
 }
 
 .slide-stack > div {
   border: 1px solid color-mix(in srgb, currentColor, transparent 45%);
   background: color-mix(in oklab, currentColor 6%, transparent);
   border-radius: 0.6em;
-  padding: 0.6em 0.9em;
+  padding: 0.7em 1em;
 }
 
 /* ─── Ban Icon (prohibition circle) ─── */
