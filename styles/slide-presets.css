@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Slide Presets — layout variants per slide type
+   Add class alongside .slide, e.g. <section class="slide dark cover">
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Cover / Section-Divider ───
+   Centered content, large display title, no top offset.           */
+.slide.cover .slide-content,
+.slide.section-divider .slide-content {
+  align-self: center;
+  margin-top: 0;
+}
+
+.slide.cover h1,
+.slide.cover h2,
+.slide.section-divider h1,
+.slide.section-divider h2 {
+  font-size: var(--font-size-display);
+}
+
+/* ─── Content Slide ───
+   Left-aligned body with subtitle-sized heading and more offset.  */
+.slide.content-slide .slide-content {
+  max-width: 88%;
+  margin-top: clamp(1.8rem, 3.2cqw, 3.5rem);
+}
+
+.slide.content-slide h2 {
+  margin-bottom: 0.9em;
+}
+
+.slide.content-slide .slide-bullets {
+  margin-top: var(--space-lg);
+  gap: 0.85em;
+}
