@@ -70,7 +70,8 @@ body {
 /* ─── Build-Step Animation ─── */
 [data-step] {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(12px);
+  transition: opacity 380ms ease, transform 380ms ease;
 }
 
 .is-visible {
@@ -79,13 +80,13 @@ body {
 }
 
 .build-in {
-  animation: riseIn 340ms ease;
+  animation: riseIn 380ms ease;
 }
 
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -136,7 +137,7 @@ body {
 /* ─── Responsive ─── */
 @media (max-aspect-ratio: 16/10) {
   .slide-content {
-    max-width: 94%;
+    max-width: 96%;
   }
 
   .slide-cards--5col {
